@@ -18,6 +18,7 @@ class Strategy(IntEnum):
     best2bin = 4
     currenttobest1bin = 5
     randtobest1bin = 6
+    scaledrand1bin = 7
 
 
 def arange(lower, upper):
@@ -88,9 +89,9 @@ if __name__ == '__main__':
     CROSSOVER_PROBABILITY = 0.5
     POPULATION_SIZE = 128
 
-    # FUNC = ackley
-    FUNC = rastrigin
-    FUNC = schaffer
+    FUNC = ackley
+    # FUNC = rastrigin
+    # FUNC = schaffer
 
     if VISUALIZE:
         X = np.linspace(*FUNC.range, 100)     
@@ -150,6 +151,12 @@ if __name__ == '__main__':
                         distances = population[idxs] - population[j]
                         diff = sub_rewards @ distances
                         p = population[best_idx]
+                    elif strategy == Strategy.scaledrand1bin:
+                        idxs = np.random.choice(np.delete(np.arange(POPULATION_SIZE), j), 3, replace=False)
+                        sub_rewards = rank_transformation(rewards)[idxs[1:]]
+                        distances = population[idxs[1:]] - population[j]
+                        diff = sub_rewards @ distances
+                        p = population[idxs[0]]
                     else:
                         raise NotImplementedError
 
