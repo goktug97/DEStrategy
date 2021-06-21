@@ -183,8 +183,8 @@ if __name__ == '__main__':
                     plt.draw()
                     moviewriter.grab_frame()
                     plt.pause(0.001)
-            if VISUALIZE:
-                moviewriter.finish()
+    if VISUALIZE:
+        moviewriter.finish()
 
     if PLOT:
         data = pd.DataFrame(data)
