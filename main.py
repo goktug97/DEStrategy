@@ -5,7 +5,7 @@ from enum import IntEnum
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib import cm 
+from matplotlib import cm
 from matplotlib.animation import MovieWriter, FFMpegWriter
 import seaborn as sns
 
@@ -83,6 +83,7 @@ class TestOptimum(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    unittest.main(exit=False)
     VISUALIZE = False
     PLOT = True
     MUTATION_FACTOR = 0.7
@@ -94,9 +95,9 @@ if __name__ == '__main__':
     # FUNC = schaffer
 
     if VISUALIZE:
-        X = np.linspace(*FUNC.range, 100)     
-        Y = np.linspace(*FUNC.range, 100)     
-        X, Y = np.meshgrid(X, Y) 
+        X = np.linspace(*FUNC.range, 100)
+        Y = np.linspace(*FUNC.range, 100)
+        X, Y = np.meshgrid(X, Y)
         Z = FUNC(X, Y)
         fig3d, ax3d = plt.subplots(subplot_kw={"projection": "3d"})
         moviewriter = FFMpegWriter()
@@ -177,9 +178,9 @@ if __name__ == '__main__':
                 if VISUALIZE:
                     ax3d.cla()
                     ax3d.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.nipy_spectral,
-                                      linewidth=0.08, antialiased=True)    
+                                      linewidth=0.08, antialiased=True)
                     p = np.array(population)
-                    ax3d.plot(p[:, 0], p[:, 1], 'ro') 
+                    ax3d.plot(p[:, 0], p[:, 1], 'ro')
                     plt.draw()
                     moviewriter.grab_frame()
                     plt.pause(0.001)
@@ -195,7 +196,3 @@ if __name__ == '__main__':
         ax.legend(loc='center left', bbox_to_anchor=(1, 0.5)).set_draggable(True)
         plt.tight_layout(pad=0.5)
         plt.savefig(f'plot_{FUNC.__name__}_{MUTATION_FACTOR}_{CROSSOVER_PROBABILITY}_{POPULATION_SIZE}.png')
-
-    unittest.main()
-
-
